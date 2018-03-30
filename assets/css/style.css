@@ -1,13 +1,7 @@
-* {
-    border: 1px solid white;
-}
-
 body, html {
     height: 100%;
     color: yellow;
 }
-
-
 
 body {
     display: flex;
@@ -23,10 +17,73 @@ body {
 section {
    flex: 1 0 auto;
    width:100%;
+   padding: .5em;
 }
 
 footer, header {
     width:100%;
     flex-shrink: 0;
     text-align: center;
+    padding: 1em;
+}
+
+a {
+    color: lightgrey;
+    text-decoration: none;
+}
+
+h1 {
+    /*text-align: center;*/
+    font-size: 600%;
+}
+
+h1 img {
+    height:1em;
+}
+
+.card {
+    display:inline-block;
+    position: relative;
+    width:150px;
+    height:100px;
+    margin: 1em;
+}
+
+.card h3 {
+    position: absolute;
+    top:-1em;
+    width:100%;
+    text-align:center;
+    padding: .25em;
+    color: yellow;
+    background-color:black;
+}
+.card h4 {
+    position: absolute;
+    bottom:-1em;
+    width:100%;
+    text-align:center;
+    padding: .25em;
+    color: yellow;
+    background-color:black;
+}
+
+#luke {
+    background: url('../images/luke.png') no-repeat;
+    background-size: 100%;
+}
+
+#han {
+    background: url('../images/han.png') no-repeat;
+    background-size: 100%;
+}
+
+#obiwan {
+    background: url('../images/obiwan.png') no-repeat;
+    background-size: 100%;
+}
+
+#vader {
+    background: url('../images/darth.png') no-repeat;
+    background-size: 100%;
 }
