@@ -2,6 +2,7 @@
 body, html {
     height: 100%;
     color: yellow;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 }
 
 body {
@@ -122,4 +123,8 @@ img.weapon {
 
 img.weapon:hover {
     width:77px;
+}
+
+#battleText {
+    display:inline-block;
 }

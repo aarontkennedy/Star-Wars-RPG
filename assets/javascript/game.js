@@ -17,6 +17,7 @@ $(document).ready(function () {
         this.currentHealth = this.kHealthPoints;
         this.moveToInitialStaging();
         this.kElement.show();
+        this.hideWeapon();
         this.damaged(0); // prints the current health
     };
 
@@ -45,6 +46,7 @@ $(document).ready(function () {
         }
         // update the character's health
         $("#" + this.kID + " h4 span").text(this.currentHealth);
+        return damage;
     };
 
     Character.prototype.moveToInitialStaging = function () {
@@ -56,7 +58,7 @@ $(document).ready(function () {
     };
 
     Character.prototype.moveToDefender = function () {
-        this.kElement.appendTo($(".defender"));
+        this.kElement.insertBefore($("#battleText"));
     };
 
     Character.prototype.dies = function () {
@@ -89,18 +91,17 @@ $(document).ready(function () {
         return allAreDead;
     }
 
-    
+
 
     // object for displaying battle information
-    function BattleDisplay () {
-        this.element = $("<div>");
-        this.element.hide();
-
+    function BattleDisplay() {
+        this.element = $("#battleText");
+        this.element.text("");
     }
 
     BattleDisplay.prototype.print = function (text) {
         $(".defender").append(this.element);
-        this.element.text(text);
+        this.element.html(text);
         this.element.show();
     };
 
@@ -112,19 +113,24 @@ $(document).ready(function () {
 
 
     console.log("State 1: Wait for a character to be chosen");
-    $('.card').on('click', function () {
-        $('.card').off();
-        console.log(this.id + " was chosen.");
-        for (var i = 0; i < characters.length; i++) {
-            if (this.id == characters[i].kID) {
-                chosenCharacter = characters[i];
+    function goToState1() {
+        battleDisplayText.print("Choose a player to start.");
+        $('.card').on('click', function () {
+            $('.card').off();
+            console.log(this.id + " was chosen.");
+            for (var i = 0; i < characters.length; i++) {
+                if (this.id == characters[i].kID) {
+                    chosenCharacter = characters[i];
+                }
+                else {
+                    characters[i].moveToEnemies();
+                }
             }
-            else {
-                characters[i].moveToEnemies();
-            }
-        }
-        goToState2();
-    });
+            battleDisplayText.print("Choose an enemy to battle.");
+            goToState2();
+        });
+    }
+    goToState1();
 
     console.log("State 2: Wait for a character to chosen to fight");
     function goToState2() {
@@ -154,9 +160,16 @@ $(document).ready(function () {
 
     console.log("State 3: Time to battle");
     function goToState3() {
+        battleDisplayText.print("Attack!");
         $('img.weapon').on('click', function () {
-            defendingCharacter.damaged(chosenCharacter.attack());
-            chosenCharacter.damaged(defendingCharacter.counterAttack());
+            var youInflicted = defendingCharacter.damaged(chosenCharacter.attack());
+            var youTookDamage = chosenCharacter.damaged(defendingCharacter.counterAttack());
+
+            var battleResultsString = "<p>You attacked " + defendingCharacter.kName + " for " + youInflicted + " points damage.</p>";
+
+            battleResultsString += "<p>" + defendingCharacter.kName + " counterattacked for " + youTookDamage + " points damage.</p>";
+
+            battleDisplayText.print(battleResultsString);
 
             if (chosenCharacter.isDead()) {
                 goToState4(false);
@@ -165,7 +178,7 @@ $(document).ready(function () {
                 goToState4(true);
             }
             else if (defendingCharacter.isDead()) {
-                //battleDisplayText.print("You defeated " + defendingCharacter.kName + "!");
+                battleDisplayText.print("<p>You defeated " + defendingCharacter.kName + "!</p><p>Choose an enemy to battle.</p>");
                 defendingCharacter.dies();
                 chosenCharacter.hideWeapon();
                 goToState2();
@@ -181,6 +194,11 @@ $(document).ready(function () {
         else {
             alert("Game Over!");
         }
+        // do some sort of reset
+        for (var i = 0; i < characters.length; i++) {
+            characters[i].reset();
+        }
+        goToState1();
     }
 
 });
