@@ -84,6 +84,16 @@ h2 {
     background-color:black;
 }
 
+.defender h3, .defender h4 {
+    color: red;
+    background-color:black;
+} 
+
+.enemies h3, .enemies h4 {
+    color: black;
+    background-color:red;
+} 
+
 #luke {
     background: url('../images/luke.png') no-repeat;
     background-size: 100%;

@@ -82,12 +82,34 @@ $(document).ready(function () {
     function areAllEnemiesDead() {
         var allAreDead = true;
         for (var i = 0; i < characters.length; i++) {
-            if (this.id != chosenCharacter.kID) {
-                allAreDead = this.isDead() && allAreDead;
+            if (characters[i].kID != chosenCharacter.kID) {
+                allAreDead = characters[i].isDead() && allAreDead;
             }
         }
         return allAreDead;
     }
+
+    
+
+    // object for displaying battle information
+    function BattleDisplay () {
+        this.element = $("<div>");
+        this.element.hide();
+
+    }
+
+    BattleDisplay.prototype.print = function (text) {
+        $(".defender").append(this.element);
+        this.element.text(text);
+        this.element.show();
+    };
+
+    BattleDisplay.prototype.hide = function () {
+        this.element.hide();
+    };
+
+    var battleDisplayText = new BattleDisplay();
+
 
     console.log("State 1: Wait for a character to be chosen");
     $('.card').on('click', function () {
@@ -135,18 +157,19 @@ $(document).ready(function () {
         $('img.weapon').on('click', function () {
             defendingCharacter.damaged(chosenCharacter.attack());
             chosenCharacter.damaged(defendingCharacter.counterAttack());
-            if (defendingCharacter.isDead()) {
-                defendingCharacter.dies();
-                chosenCharacter.hideWeapon();
-                goToState2();
-            }
-            else if (chosenCharacter.isDead()) {
+
+            if (chosenCharacter.isDead()) {
                 goToState4(false);
             }
             else if (areAllEnemiesDead()) {
                 goToState4(true);
             }
-
+            else if (defendingCharacter.isDead()) {
+                //battleDisplayText.print("You defeated " + defendingCharacter.kName + "!");
+                defendingCharacter.dies();
+                chosenCharacter.hideWeapon();
+                goToState2();
+            }
         });
     }
 
@@ -155,11 +178,9 @@ $(document).ready(function () {
         if (playerWon) {
             alert("You Win!");
         }
-        alert("Game Over!");
+        else {
+            alert("Game Over!");
+        }
     }
-
-
-
-
 
 });
