@@ -45,6 +45,15 @@ a {
     text-decoration: none;
 }
 
+header h1, header audio {
+    display:inline-block;
+}
+
+#soundCtrlButton {
+    width:40px;
+    margin: 0 0 0 2em;
+}
+
 h1 {
     font-size: 600%;
     font-weight: bolder;
@@ -127,4 +136,37 @@ img.weapon:hover {
 
 #battleText {
     display:inline-block;
+    font-weight:bold;
+}
+
+#gameEndDialog {
+    display:none;
+    z-index: 1000;
+    position: fixed;
+    width: 50%;
+    height: 40%;
+    top: 30%;
+    left: 25%;
+    background: url('../images/yodaBackground.png') no-repeat;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: 1px solid yellow;
+    border-radius: 3px;
+}
+
+#gameEndDialog h2 {
+    text-align:center;
+    margin: .5em 0em;
+}
+
+#gameMessage, #tryAgain {
+    text-align:center;
+    padding: 1em;
+    font-size: 125%;
+}
+
+#tryAgain {
+    position: absolute;
+    bottom: 1em;
+    width:100%;
 }

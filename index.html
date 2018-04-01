@@ -17,7 +17,17 @@
         <h1>
             <img src="assets/images/StarWarsLogo.png" alt="Star Wars"> RPG
         </h1>
+        <img id="soundCtrlButton" src="assets/images/sound.png" alt="Sound Control Button">
+        <audio id="starWarsTheme" controls>
+            <source src="assets/theme.mp3" type="audio/mpeg">
+        </audio>
     </header>
+
+    <div id="gameEndDialog" title="Game Over!">
+        <h2>Game Over</h2>
+        <p id="gameMessage"></p>
+        <p id="tryAgain">Try Again</p>
+    </div>
 
     <section>
         <div class="yourCharacter">
@@ -54,7 +64,7 @@
         <div class="defender">
             <h2>Against</h2>
 
-            <div id="battleText">testing</div>
+            <div id="battleText"></div>
 
         </div>
         <div class="enemies">
