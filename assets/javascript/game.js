@@ -132,10 +132,10 @@ $(document).ready(function () {
 
     // this is an array of the characters to be used by the game
     var characters = [
+        new Character("obiwan", "Obi-Wan Kenobi", 104, 10, "saber"),
         new Character("luke", "Luke Skywalker", 100, 8, "saber"),
-        new Character("han", "Han Solo", 115, 9, "blaster"),
-        new Character("obiwan", "Obi-Wan Kenobi", 120, 10, "saber"),
-        new Character("vader", "Darth Vader", 125, 12, "saber")
+        new Character("han", "Han Solo", 120, 9, "blaster"),
+        new Character("vader", "Darth Vader", 125, 17, "saber")
     ];
     var chosenCharacter = null;  // quick access to the character chosen
     var defendingCharacter = null; // quick access to the current enemy
