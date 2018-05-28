@@ -17,6 +17,11 @@ $(document).ready(function () {
         this.htmlElement = $("#" + this.id);
         this.htmlElement.hide();
         this.messageLocationId = $("#gameMessage");
+        // pre load modal backgrounds into cache
+        let yodaBackground = new Image();
+        yodaBackground.src = "assets/images/yodaBackground.png";
+        let sithBackground = new Image();
+        sithBackground.src = "assets/images/palpatineBackdrop.jpg";
     }
 
     MyModal.prototype.hide = function (isGoodMessage, message) {
