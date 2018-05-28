@@ -16,6 +16,7 @@ $(document).ready(function () {
         this.id = "gameEndDialog";
         this.htmlElement = $("#" + this.id);
         this.htmlElement.hide();
+        this.messageLocationId = $("#gameMessage");
     }
 
     MyModal.prototype.hide = function (isGoodMessage, message) {
@@ -33,7 +34,7 @@ $(document).ready(function () {
             this.htmlElement.css("background-image",
                 "url(./assets/images/palpatineBackdrop.jpg)");
         }
-        $("#gameMessage").text(message); // display the message
+        this.messageLocationId.text(message); // display the message
 
         // This creates an event that listens for the clicking of
         // the dialog window.  Clicking the window closes it and 
@@ -62,11 +63,22 @@ $(document).ready(function () {
         this.reset();
     }
 
+    // pass in a boolean to say if you want it to display with a click cursor
+    Character.prototype.makeClickable = function (b) {
+        if (b) {
+            this.kElement.addClass("clickable");
+        }
+        else {
+            this.kElement.removeClass("clickable");
+        }
+    };
+
     Character.prototype.reset = function () {
         this.currentAttackPower = this.kAttackPower;
         this.currentHealth = this.kHealthPoints;
         this.moveToInitialStaging();
         this.kElement.show();
+        this.makeClickable(true);
         this.hideWeapon();
         this.damaged(0); // prints the current health
     };
@@ -152,6 +164,15 @@ $(document).ready(function () {
         return allAreDead;
     }
 
+    // make all enemies clickable
+    function makeAllEnemiesClickable () {
+        for (var i = 0; i < characters.length; i++) {
+            if (characters[i].kID != chosenCharacter.kID) {
+                characters[i].makeClickable(true);
+            }
+        }
+    }
+
     // do some sort of reset, reset characters and go back to beginning of game
     function resetGame() {
         for (var i = 0; i < characters.length; i++) {
@@ -194,6 +215,7 @@ $(document).ready(function () {
             for (var i = 0; i < characters.length; i++) {
                 if (this.id == characters[i].kID) {
                     chosenCharacter = characters[i];
+                    chosenCharacter.makeClickable(false);
                 }
                 else {
                     characters[i].moveToEnemies();
@@ -205,13 +227,16 @@ $(document).ready(function () {
     }
     goToState1(); // we first start at State 1
 
-    console.log("State 2: Wait for a character to chosen to fight");
+    console.log("State 2: Wait for a character to be chosen to fight");
     function goToState2() {
+        makeAllEnemiesClickable();
         // set up an even to listen to the characters and specifically 
         // for one of the enemies to be chosen
         $('.card').on('click', function () {
             console.log(this.id + " was chosen to fight.");
             for (var i = 0; i < characters.length; i++) {
+                // make all characters unclickable
+                characters[i].makeClickable(false);
 
                 if (this.id == chosenCharacter.kID) {
                     // do nothing since they clicked their own 
